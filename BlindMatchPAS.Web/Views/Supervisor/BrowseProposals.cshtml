@@ -1,0 +1,67 @@
+@model BlindMatchPAS.Web.Models.Supervisor.BrowseProposalsViewModel
+
+@{
+    ViewData["Title"] = "Browse Proposals";
+}
+
+<div class="row align-items-center mb-4">
+    <div class="col-md-6">
+        <h1>Available Project Proposals</h1>
+        <p class="text-muted">Browse anonymous proposals. Student identities will be revealed only after a match is confirmed.</p>
+    </div>
+    <div class="col-md-6 text-md-end">
+        <form method="get" class="d-inline-flex gap-2">
+            <input type="text" name="searchTerm" class="form-control" placeholder="Search keywords..." value="@Model.SearchTerm" />
+            <select name="areaId" class="form-select w-auto" onchange="this.form.submit()">
+                <option value="">All Research Areas</option>
+                @foreach (var area in Model.AllResearchAreas)
+                {
+                    <option value="@area.Id" selected="@(Model.FilteredAreaId == area.Id ? "selected" : null)">@area.Name</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">Search</button>
+            @if (Model.FilteredAreaId.HasValue || !string.IsNullOrEmpty(Model.SearchTerm))
+            {
+                <a asp-action="BrowseProposals" class="btn btn-outline-secondary">Clear</a>
+            }
+        </form>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var proposal in Model.AvailableProposals)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="badge bg-light text-primary border border-primary">@proposal.ResearchArea?.Name</span>
+                        @{
+                            var statusClass = proposal.Status == BlindMatchPAS.Core.Entities.ProjectStatus.UnderReview ? "text-info" : "text-warning";
+                        }
+                        <small class="@statusClass fw-bold"><i class="bi bi-circle-fill" style="font-size: 0.6rem;"></i> @proposal.Status</small>
+                    </div>
+                    <h5 class="card-title">@proposal.Title</h5>
+                    <p class="card-text text-muted text-truncate-3">
+                        @proposal.Abstract
+                    </p>
+                </div>
+                <div class="card-footer bg-white border-0 pb-3">
+                    <div class="d-grid">
+                        <a asp-action="ProposalDetail" asp-route-id="@proposal.Id" class="btn btn-outline-primary">Review Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.AvailableProposals.Any())
+{
+    <div class="text-center py-5">
+        <div class="display-4 text-muted mb-3"><i class="bi bi-journal-x"></i></div>
+        <h3>No proposals found</h3>
+        <p class="text-muted">Check back later or try clearing your filters.</p>
+        <a asp-action="BrowseProposals" class="btn btn-outline-primary">View All Proposals</a>
+    </div>
+}

@@ -1,0 +1,40 @@
+@model BlindMatchPAS.Web.Models.Supervisor.ExpertiseViewModel
+
+@{
+    ViewData["Title"] = "Manage Expertise";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 mt-5">
+            <div class="card-body p-4">
+                <h2 class="text-center mb-4">Select Your Research Interests</h2>
+                <p class="text-muted text-center mb-4">Choose the research areas you are qualified to supervise. This will prioritize matching proposals in these fields.</p>
+                
+                <form asp-action="ExpertiseManagement" method="post">
+                    <div class="list-group mb-4">
+                        @if (Model.AllResearchAreas != null)
+                        {
+                            foreach (var area in Model.AllResearchAreas)
+                            {
+                                <label class="list-group-item d-flex gap-3">
+                                    <input class="form-check-input flex-shrink-0" type="checkbox" name="SelectedAreaIds" value="@area.Id" 
+                                           @(Model.SelectedAreaIds != null && Model.SelectedAreaIds.Contains(area.Id) ? "checked" : "") style="font-size: 1.375em;">
+                                    <span class="pt-1">
+                                        <strong>@area.Name</strong>
+                                        <small class="d-block text-muted">@area.Description</small>
+                                    </span>
+                                </label>
+                            }
+                        }
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Dashboard" class="btn btn-outline-secondary">Back</a>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
