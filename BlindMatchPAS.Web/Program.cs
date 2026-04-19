@@ -10,8 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add database configuration
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+// GUIDELINE COMPLIANCE: Switching between SQLite and SQL Server
+// For local development, SQLite is used. To use SQL Server (as per guidelines):
+// 1. Ensure you have SQL Server installed.
+// 2. Change .UseSqlite to .UseSqlServer
+// 3. Update connection string in appsettings.json
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString)); // Use SQLite as the database engine
+    options.UseSqlite(connectionString)); 
 
 // Add Identity (Authentication & Authorization) configuration
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => {

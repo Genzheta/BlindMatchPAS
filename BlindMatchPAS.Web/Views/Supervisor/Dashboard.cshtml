@@ -1,0 +1,112 @@
+@model BlindMatchPAS.Web.Models.Supervisor.SupervisorDashboardViewModel
+
+@{
+    ViewData["Title"] = "Supervisor Dashboard";
+}
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1 class="display-5 fw-bold">Supervisor <span class="text-primary">Dashboard</span></h1>
+        <p class="text-muted">Manage your matched projects and technical expertise areas.</p>
+    </div>
+    <div class="col-md-4 text-md-end pt-3">
+        <a asp-action="ExpertiseManagement" class="btn btn-outline-primary rounded-pill">
+            <i class="bi bi-gear-fill me-2"></i> Manage Expertise
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Expertise Overview -->
+    <div class="col-lg-4">
+        <div class="card h-100 bg-primary text-white">
+            <div class="card-body p-4">
+                <h4 class="mb-3"><i class="bi bi-journal-check me-2"></i> My Expertise</h4>
+                <div class="d-flex flex-wrap gap-2">
+                    @if (Model.PreferredResearchAreas.Any())
+                    {
+                        @foreach (var area in Model.PreferredResearchAreas)
+                        {
+                            <span class="badge bg-white text-primary">@area.Name</span>
+                        }
+                    }
+                    else
+                    {
+                        <p class="small opacity-75">No expertise areas selected yet.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="col-lg-8">
+        <div class="row h-100 g-4">
+            <div class="col-md-6">
+                <div class="card h-100 p-3">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-success bg-opacity-10 text-success p-3 rounded-circle me-3">
+                            <i class="bi bi-people-fill h3 mb-0"></i>
+                        </div>
+                        <div>
+                            <h2 class="mb-0">@Model.MatchedProjects.Count</h2>
+                            <p class="text-muted mb-0">Matched Projects</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 p-3">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle me-3">
+                            <i class="bi bi-search h3 mb-0"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">Browse Proposals</h5>
+                            <a asp-action="BrowseProposals" class="small text-decoration-none">View available projects <i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="mt-5 mb-4">My Matched Projects <span class="badge bg-success rounded-pill ms-2">@Model.MatchedProjects.Count</span></h3>
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    @foreach (var match in Model.MatchedProjects)
+    {
+        <div class="col">
+            <div class="card border-start border-success border-4 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="badge status-matched">Matched on @match.MatchedAt.ToShortDateString()</span>
+                        <span class="text-muted small"><i class="bi bi-tag me-1"></i> @match.ProjectProposal?.ResearchArea?.Name</span>
+                    </div>
+                    <h5 class="card-title">@match.ProjectProposal?.Title</h5>
+                    <div class="mt-3 p-3 bg-light rounded-3">
+                        <p class="mb-1 small fw-bold text-muted">STUDENT CONTACT (REVEALED)</p>
+                        <p class="mb-0"><strong>@match.Student?.FullName</strong></p>
+                        <p class="mb-0 text-primary">@match.Student?.Email</p>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-0 pb-3">
+                    <a asp-action="ProposalDetail" asp-route-id="@match.ProjectProposalId" class="btn btn-sm btn-outline-secondary w-100">
+                        View Project Details
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.MatchedProjects.Any())
+{
+    <div class="text-center py-5">
+        <div class="display-1 text-muted mb-3 opacity-25"><i class="bi bi-folder-x"></i></div>
+        <h4>No projects matched yet</h4>
+        <p class="text-muted">Start by browsing anonymous project proposals that match your expertise.</p>
+        <a asp-action="BrowseProposals" class="btn btn-primary px-4">Browse Proposals</a>
+    </div>
+}

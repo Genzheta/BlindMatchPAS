@@ -1,0 +1,100 @@
+@model BlindMatchPAS.Core.Entities.ProjectProposal
+
+@{
+    ViewData["Title"] = "Proposal Details";
+    bool isMatched = Model.Status == BlindMatchPAS.Core.Entities.ProjectStatus.Matched;
+}
+
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-action="Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+    </ol>
+</nav>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card p-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <h1 class="display-6 fw-bold">@Model.Title</h1>
+                    @{
+                        var statusClass = Model.Status switch
+                        {
+                            ProjectStatus.Pending => "status-pending",
+                            ProjectStatus.UnderReview => "status-review",
+                            ProjectStatus.Matched => "status-matched",
+                            ProjectStatus.Withdrawn => "status-withdrawn",
+                            _ => "bg-light"
+                        };
+                    }
+                    <span class="badge @statusClass px-3 py-2">@Model.Status</span>
+                </div>
+
+                <div class="mb-4">
+                    <span class="badge bg-light text-primary border border-primary">@Model.ResearchArea?.Name</span>
+                </div>
+
+                <h4 class="fw-bold mb-3">Abstract</h4>
+                <p class="text-muted mb-5" style="white-space: pre-line;">@Model.Abstract</p>
+
+                <h4 class="fw-bold mb-3">Technical Stack</h4>
+                <div class="d-flex flex-wrap gap-2">
+                    @foreach (var tech in Model.TechnicalStack.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <span class="badge bg-light text-dark border">@tech.Trim()</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Supervisor Reveal Card -->
+        <div class="card border-0 bg-primary bg-opacity-10 p-3 mb-4">
+            <div class="card-body text-center py-4">
+                @if (isMatched)
+                {
+                    <div class="mb-3">
+                        <i class="bi bi-person-workspace text-primary display-4"></i>
+                    </div>
+                    <h4 class="fw-bold text-primary">Supervisor Matched!</h4>
+                    <p class="text-muted small">Your project has been accepted for supervision.</p>
+                    <hr />
+                    <div class="text-start">
+                        @* Assuming the match information is available via some navigation property or we need to fetch it *@
+                        <p class="mb-1 text-muted small">SUPERVISOR NAME</p>
+                        <h5 class="fw-bold mb-3">@(Model.Matches?.FirstOrDefault()?.Supervisor?.FullName ?? "Allocated Faculty")</h5>
+                        <p class="mb-1 text-muted small">CONTACT EMAIL</p>
+                        <p class="text-primary fw-semibold">@(Model.Matches?.FirstOrDefault()?.Supervisor?.Email ?? "contact@university.edu")</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="mb-3">
+                        <i class="bi bi-hourglass-split text-muted display-4"></i>
+                    </div>
+                    <h4 class="fw-bold text-muted">Awaiting Match</h4>
+                    <p class="text-muted small">Your proposal is being reviewed anonymously by supervisors.</p>
+                    
+                    @if (Model.Status == ProjectStatus.Pending)
+                    {
+                        <div class="d-grid gap-2 mt-4">
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit Proposal</a>
+                            <form asp-action="Withdraw" asp-route-id="@Model.Id" method="post">
+                                <button type="submit" class="btn btn-link text-danger text-decoration-none w-100" onclick="return confirm('Are you sure you want to withdraw this proposal?')">Withdraw Proposal</button>
+                            </form>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        
+        <div class="card p-3">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">System Log</h5>
+                <p class="small text-muted mb-0"><i class="bi bi-info-circle me-1"></i> Submission accepted at @Model.CreatedAt.ToString("g")</p>
+            </div>
+        </div>
+    </div>
+</div>

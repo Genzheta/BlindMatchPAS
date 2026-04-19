@@ -1,0 +1,107 @@
+@model BlindMatchPAS.Core.Entities.ProjectProposal
+
+@{
+    ViewData["Title"] = "Project Proposal Details";
+    bool isMatched = Model.Status == BlindMatchPAS.Core.Entities.ProjectStatus.Matched;
+}
+
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-action="BrowseProposals">Browse</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Proposal #@Model.Id</li>
+    </ol>
+</nav>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card p-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div>
+                        <span class="badge bg-primary bg-opacity-10 text-primary mb-2">@Model.ResearchArea?.Name</span>
+                        <h1 class="display-6 fw-bold">@Model.Title</h1>
+                    </div>
+                    <div>
+                        @{
+                            var statusClass = Model.Status switch
+                            {
+                                ProjectStatus.Pending => "status-pending",
+                                ProjectStatus.UnderReview => "status-review",
+                                ProjectStatus.Matched => "status-matched",
+                                _ => "bg-light"
+                            };
+                        }
+                        <span class="badge @statusClass px-3 py-2">@Model.Status</span>
+                    </div>
+                </div>
+
+                <h4 class="fw-bold mb-3">Abstract</h4>
+                <p class="lead text-muted mb-5" style="white-space: pre-line;">@Model.Abstract</p>
+
+                <h4 class="fw-bold mb-3">Technical Stack</h4>
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    @foreach (var tech in Model.TechnicalStack.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <span class="badge border border-secondary text-secondary">@tech.Trim()</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Identity Reveal Card -->
+        <div class="card border-0 bg-light p-3 mb-4">
+            <div class="card-body text-center py-4">
+                @if (isMatched)
+                {
+                    <div class="mb-3">
+                        <i class="bi bi-person-check-fill text-success display-4"></i>
+                    </div>
+                    <h4 class="fw-bold">Identity Revealed</h4>
+                    <p class="text-muted small">This project has been successfully matched.</p>
+                    <hr />
+                    <div class="text-start">
+                        <p class="mb-1 text-muted small">STUDENT NAME</p>
+                        <h5 class="fw-bold mb-3">@Model.Student?.FullName</h5>
+                        <p class="mb-1 text-muted small">EMAIL ADDRESS</p>
+                        <p class="text-primary fw-semibold">@Model.Student?.Email</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="mb-3">
+                        <i class="bi bi-incognito text-muted display-4"></i>
+                    </div>
+                    <h4 class="fw-bold">Blind Review</h4>
+                    <p class="text-muted small">Student identity is hidden until a match is confirmed by you.</p>
+                    
+                    @if (Model.Status != ProjectStatus.Matched)
+                    {
+                        <form asp-action="ConfirmMatch" asp-route-id="@Model.Id" method="post" class="mt-4">
+                            <button type="submit" class="btn btn-primary w-100 py-3" onclick="return confirm('Are you sure you want to match with this project? This will reveal your identity to the student.')">
+                                Confirm Match <i class="bi bi-check-circle ms-2"></i>
+                            </button>
+                        </form>
+                        <p class="small text-muted mt-3">By clicking confirm, you agree to supervise this project.</p>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="card p-3">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Timeline</h5>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-light p-2 rounded me-3">
+                        <i class="bi bi-calendar-event"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 small text-muted">Submitted on</p>
+                        <p class="mb-0 fw-semibold">@Model.CreatedAt.ToLongDateString()</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
