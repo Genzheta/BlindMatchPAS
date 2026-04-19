@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlindMatchPAS.Web.Controllers
 {
+    // Handles user registration, login, and logout
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -21,6 +22,7 @@ namespace BlindMatchPAS.Web.Controllers
             _roleManager = roleManager;
         }
 
+        // Displays the user registration page
         [HttpGet]
         public IActionResult Register()
         {
@@ -65,6 +67,7 @@ namespace BlindMatchPAS.Web.Controllers
             return View(model);
         }
 
+        // Displays the login page
         [HttpGet]
         public IActionResult Login()
         {

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlindMatchPAS.Infrastructure.Data
 {
+    // The database context for the application, handling all database operations
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -11,11 +12,12 @@ namespace BlindMatchPAS.Infrastructure.Data
         {
         }
 
-        public DbSet<ResearchArea> ResearchAreas { get; set; }
-        public DbSet<ProjectProposal> ProjectProposals { get; set; }
-        public DbSet<SupervisorExpertise> SupervisorExpertises { get; set; }
-        public DbSet<Match> Matches { get; set; }
-        public DbSet<AuditLog> AuditLogs { get; set; }
+        // Tables in the database
+        public DbSet<ResearchArea> ResearchAreas { get; set; } // Categories of research
+        public DbSet<ProjectProposal> ProjectProposals { get; set; } // Student project submissions
+        public DbSet<SupervisorExpertise> SupervisorExpertises { get; set; } // Join table for supervisors and areas
+        public DbSet<Match> Matches { get; set; } // Records of successful matches
+        public DbSet<AuditLog> AuditLogs { get; set; } // Security and activity logs
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

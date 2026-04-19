@@ -5,10 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlindMatchPAS.Infrastructure.Services
 {
+    // Implementation of IProposalService using Entity Framework Core
     public class ProposalService : IProposalService
     {
         private readonly ApplicationDbContext _context;
 
+        // Constructor: Injects the database context
         public ProposalService(ApplicationDbContext context)
         {
             _context = context;
@@ -107,11 +109,14 @@ namespace BlindMatchPAS.Infrastructure.Services
                 .ToListAsync();
         }
 
+        // Updates the list of research areas a supervisor specializes in
         public async Task<bool> UpdateSupervisorExpertiseAsync(string supervisorId, List<int> areaIds)
         {
+            // First, remove existing expertise records for this supervisor
             var existing = _context.SupervisorExpertises.Where(se => se.SupervisorId == supervisorId);
             _context.SupervisorExpertises.RemoveRange(existing);
 
+            // Add new expertise records
             if (areaIds != null)
             {
                 foreach (var areaId in areaIds)
@@ -124,6 +129,7 @@ namespace BlindMatchPAS.Infrastructure.Services
                 }
             }
 
+            // Save changes to the database
             return await _context.SaveChangesAsync() > 0;
         }
     }

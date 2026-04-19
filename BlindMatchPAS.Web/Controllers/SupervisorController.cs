@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlindMatchPAS.Web.Controllers
 {
+    // Handles all supervisor-related actions like browsing student proposals and matching
     [Authorize(Roles = "Supervisor")]
     public class SupervisorController : Controller
     {
@@ -66,6 +67,7 @@ namespace BlindMatchPAS.Web.Controllers
             return RedirectToAction(nameof(Dashboard));
         }
 
+        // Browses all available student proposals (anonymized for blind review)
         public async Task<IActionResult> BrowseProposals(int? areaId, string? searchTerm)
         {
             var user = await _userManager.GetUserAsync(User);

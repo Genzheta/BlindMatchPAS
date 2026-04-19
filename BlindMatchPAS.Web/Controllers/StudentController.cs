@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlindMatchPAS.Web.Controllers
 {
+    // Handles all student-related actions like viewing the dashboard and managing proposals
     [Authorize(Roles = "Student")]
     public class StudentController : Controller
     {
@@ -19,6 +20,7 @@ namespace BlindMatchPAS.Web.Controllers
             _userManager = userManager;
         }
 
+        // Displays the student's dashboard with their project proposals
         public async Task<IActionResult> Dashboard()
         {
             var user = await _userManager.GetUserAsync(User);

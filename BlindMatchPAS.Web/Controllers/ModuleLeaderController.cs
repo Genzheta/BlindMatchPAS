@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlindMatchPAS.Web.Controllers
 {
+    // Handles oversight and administration tasks for the module leader
     [Authorize(Roles = "ModuleLeader")]
     public class ModuleLeaderController : Controller
     {
@@ -17,6 +18,7 @@ namespace BlindMatchPAS.Web.Controllers
             _context = context;
         }
 
+        // Displays system-wide statistics and recent activities
         public async Task<IActionResult> Dashboard()
         {
             var total = await _context.ProjectProposals.CountAsync();
