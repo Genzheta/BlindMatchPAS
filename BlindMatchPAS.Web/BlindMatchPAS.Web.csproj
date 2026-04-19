@@ -1,11 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <ItemGroup>
-    <ProjectReference Include="..\BlindMatchPAS.Core\BlindMatchPAS.Core.csproj" />
-    <ProjectReference Include="..\BlindMatchPAS.Infrastructure\BlindMatchPAS.Infrastructure.csproj" />
-  </ItemGroup>
-
-<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlindMatchPAS.Core\BlindMatchPAS.Core.csproj" />
@@ -21,11 +20,5 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.2" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
 
 </Project>
