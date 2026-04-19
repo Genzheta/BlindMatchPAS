@@ -1,0 +1,21 @@
+{
+  "name": "sdtp_coursework",
+  "version": "1.0.0",
+  "description": "A secure, web-based platform designed for academic institutions to facilitate fair and interest-driven matching between student research projects and academic supervisors using **Blind Matching** principles.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Genzheta/SDT-P_Course.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Genzheta/SDT-P_Course/issues"
+  },
+  "homepage": "https://github.com/Genzheta/SDT-P_Course#readme"
+}
