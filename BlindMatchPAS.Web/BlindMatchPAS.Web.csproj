@@ -5,6 +5,13 @@
     <ProjectReference Include="..\BlindMatchPAS.Infrastructure\BlindMatchPAS.Infrastructure.csproj" />
   </ItemGroup>
 
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlindMatchPAS.Core\BlindMatchPAS.Core.csproj" />
+    <ProjectReference Include="..\BlindMatchPAS.Infrastructure\BlindMatchPAS.Infrastructure.csproj" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.2" />
