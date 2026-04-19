@@ -10,16 +10,16 @@ BlindMatchPAS ensures a bias-free selection process by anonymizing student ident
 
 The project follows a **Clean Architecture** pattern, divided into four main layers:
 
-- **BlindMatchPAS.Core**: Contains domain entities (Student, Supervisor, ResearchArea, Match), interfaces, and business logic.
-- **BlindMatchPAS.Infrastructure**: Implements data access using Entity Framework Core, migrations, and external services.
+- **BlindMatchPAS.Core**: Contains domain entities (ApplicationUser, ProjectProposal, ResearchArea, Match, AuditLog), interfaces, and business logic.
+- **BlindMatchPAS.Infrastructure**: Implements data access using Entity Framework Core (SQLite), database migrations, and core services.
 - **BlindMatchPAS.Web**: The ASP.NET Core MVC application providing the user interface, controllers, and middleware (including Audit Logging).
-- **BlindMatchPAS.Tests**: Unit and integration tests for the C# codebase.
+- **BlindMatchPAS.Tests**: Comprehensive test suite including Unit, Integration, and E2E tests.
 
 ## 🛠️ Technology Stack
 
 - **Backend**: .NET 9.0, Entity Framework Core (SQLite)
 - **Frontend**: ASP.NET Core MVC (Razor), Vanilla CSS, JavaScript
-- **Testing**: Jest (JavaScript), xUnit (.NET)
+- **Testing**: Jest (Unit), xUnit (Unit/Integration), Cypress (E2E)
 - **Security**: ASP.NET Core Identity with Role-Based Access Control (RBAC)
 
 ## 🚦 Getting Started
@@ -45,7 +45,7 @@ The project follows a **Clean Architecture** pattern, divided into four main lay
    ```bash
    dotnet run --project BlindMatchPAS.Web
    ```
-   The application will be available at `https://localhost:4000` (or as configured in `launchSettings.json`).
+    The application will be available at `http://localhost:5000`.
 
 4. **Default Credentials**:
    - **Admin**: `admin@pas.com` / `Admin@123`
@@ -59,10 +59,20 @@ dotnet test
 ```
 
 ### JavaScript Tests
-Run the front-end tests using Jest:
+Run the front-end unit tests using Jest:
 ```bash
 cd BlindMatchPAS.Web
 npm test
+```
+
+### E2E Tests
+Run the end-to-end tests using Cypress:
+```bash
+cd BlindMatchPAS.Web
+# Open Cypress Test Runner
+npm run cypress:open
+# Run tests in headless mode
+npm run cypress:run
 ```
 
 ## 📝 Features
