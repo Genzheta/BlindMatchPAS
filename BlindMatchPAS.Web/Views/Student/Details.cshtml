@@ -64,9 +64,9 @@
                     <div class="text-start">
                         @* Assuming the match information is available via some navigation property or we need to fetch it *@
                         <p class="mb-1 text-muted small">SUPERVISOR NAME</p>
-                        <h5 class="fw-bold mb-3">@(Model.Matches?.FirstOrDefault()?.Supervisor?.FullName ?? "Allocated Faculty")</h5>
+                        <h5 class="fw-bold mb-3">@(Model.Match?.Supervisor?.FullName ?? "Allocated Faculty")</h5>
                         <p class="mb-1 text-muted small">CONTACT EMAIL</p>
-                        <p class="text-primary fw-semibold">@(Model.Matches?.FirstOrDefault()?.Supervisor?.Email ?? "contact@university.edu")</p>
+                        <p class="text-primary fw-semibold">@(Model.Match?.Supervisor?.Email ?? "contact@university.edu")</p>
                     </div>
                 }
                 else
