@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container py-5 mt-5">
+    <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+            <h1 class="display-3 fw-bold mb-4 text-primary">Blind Matching System</h1>
+            <p class="lead text-muted mb-5">
+                The BlindMatch Project Approval System (PAS) provides a fair process for student-supervisor pairing. Propose your ideas and get matched based on technical merit.
+            </p>
+            <div class="d-grid gap-3 d-sm-flex">
+                <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg px-5 rounded-pill shadow">Get Started</a>
+                <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary btn-lg px-5 rounded-pill">Sign In</a>
+            </div>
+        </div>
+        <div class="col-lg-6 text-center">
+            <div class="p-5 bg-primary bg-opacity-10 rounded-circle d-inline-block shadow-sm">
+                <i class="bi bi-diagram-3 text-primary display-1"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 pt-5 text-center g-4">
+        <div class="col-md-4">
+            <div class="card p-4 border-0 shadow-sm h-100">
+                <i class="bi bi-incognito h1 text-primary mb-3"></i>
+                <h4 class="fw-bold">Blind Review</h4>
+                <p class="text-muted small">Supervisors review project technical details without knowing student identities to eliminate bias.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-4 border-0 shadow-sm h-100">
+                <i class="bi bi-lightning-charge h1 text-warning mb-3"></i>
+                <h4 class="fw-bold">Identity Reveal</h4>
+                <p class="text-muted small">Identities are shown to both parties as soon as a match is confirmed.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-4 border-0 shadow-sm h-100">
+                <i class="bi bi-shield-check h1 text-success mb-3"></i>
+                <h4 class="fw-bold">Role Management</h4>
+                <p class="text-muted small">Role-Based Access Control ensures data privacy and process integrity.</p>
+            </div>
+        </div>
+    </div>
+</div>

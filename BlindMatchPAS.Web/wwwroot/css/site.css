@@ -1,0 +1,54 @@
+:root {
+    --primary: #36597A;
+    --secondary: #2a4661;
+    --accent: #CFA58C;
+    --success: #8CB3CF;
+    --background: #fdfaf8;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background);
+    color: #333;
+}
+
+.glass-nav {
+    background: #fff;
+    border-bottom: 2px solid var(--primary);
+}
+
+.card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-radius: 4px;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary);
+}
+
+.status-pending {
+    background-color: #f8f1ed;
+    color: #8a6d5c;
+}
+
+.status-review {
+    background-color: #eef2f5;
+    color: #36597a;
+}
+
+.status-matched {
+    background-color: #e9f5e9;
+    color: #2e7d32;
+}
+
+.status-withdrawn {
+    background-color: #f5f5f5;
+    color: #616161;
+}

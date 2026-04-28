@@ -1,0 +1,89 @@
+@model BlindMatchPAS.Web.Models.Account.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="row justify-content-center align-items-center min-vh-75 mt-5">
+    <div class="col-md-6">
+        <div class="card p-4 border-0">
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <i class="bi bi-person-plus text-primary display-4"></i>
+                    <h2 class="fw-bold mt-2">Join BlindMatch <span class="text-primary">PAS</span></h2>
+                    <p class="text-muted">Create your account to start matching projects.</p>
+                </div>
+
+                <form asp-action="Register" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-floating">
+                                <input asp-for="FullName" class="form-control" placeholder="John Doe" required />
+                                <label asp-for="FullName">Full Name</label>
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Email" class="form-control" placeholder="name@example.com" required />
+                        <label asp-for="Email">Email Address</label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input asp-for="Password" class="form-control" type="password" placeholder="Password" required />
+                                <label asp-for="Password">Password</label>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input asp-for="ConfirmPassword" class="form-control" type="password" placeholder="Confirm Password" required />
+                                <label asp-for="ConfirmPassword">Confirm Password</label>
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <select asp-for="Role" class="form-select" required>
+                                    <option value="">-- Choose Role --</option>
+                                    <option value="Student">Student</option>
+                                    <option value="Supervisor">Supervisor</option>
+                                </select>
+                                <label asp-for="Role">Register As</label>
+                                <span asp-validation-for="Role" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input asp-for="Department" class="form-control" placeholder="Department" />
+                                <label asp-for="Department">Department</label>
+                                <span asp-validation-for="Department" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-3 mt-3 shadow-sm rounded-pill fw-bold">
+                        Create Account <i class="bi bi-arrow-right ms-2"></i>
+                    </button>
+                </form>
+
+                <div class="mt-4 text-center">
+                    <p class="text-muted">Already have an account? <a asp-action="Login" class="text-primary fw-bold text-decoration-none">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

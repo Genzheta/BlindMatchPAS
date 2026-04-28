@@ -1,0 +1,83 @@
+@model BlindMatchPAS.Web.Models.Student.StudentDashboardViewModel
+
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<div class="row mb-5 align-items-center">
+    <div class="col-md-8">
+        <h1 class="display-5 fw-bold text-primary">Your Project Proposals</h1>
+        <p class="text-muted">Manage your submissions and track your matching status.</p>
+    </div>
+    <div class="col-md-4 text-md-end">
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-plus-lg me-2"></i> Submit New Proposal
+        </a>
+    </div>
+</div>
+
+<div class="row row-cols-1 g-4">
+    @foreach (var proposal in Model.Proposals)
+    {
+        <div class="col">
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="badge bg-light text-primary me-2">@proposal.ResearchArea?.Name</span>
+                                @{
+                                    var statusClass = proposal.Status switch
+                                    {
+                                        BlindMatchPAS.Core.Entities.ProjectStatus.Pending => "status-pending",
+                                        BlindMatchPAS.Core.Entities.ProjectStatus.UnderReview => "status-review",
+                                        BlindMatchPAS.Core.Entities.ProjectStatus.Matched => "status-matched",
+                                        BlindMatchPAS.Core.Entities.ProjectStatus.Withdrawn => "status-withdrawn",
+                                        _ => "bg-light text-dark"
+                                    };
+                                }
+                                <span class="badge @statusClass">@proposal.Status</span>
+                            </div>
+                            <h4 class="fw-bold mb-1">@proposal.Title</h4>
+                            <p class="text-muted small mb-0"><i class="bi bi-calendar3 me-1"></i> Submitted on @proposal.CreatedAt.ToString("MMM dd, yyyy")</p>
+                        </div>
+                        <div class="col-md-5 text-md-end mt-3 mt-md-0">
+                            <div class="btn-group shadow-sm rounded-pill overflow-hidden bg-white">
+                                <a asp-action="Details" asp-route-id="@proposal.Id" class="btn btn-outline-light text-dark border-0 px-4 py-2">
+                                    <i class="bi bi-eye"></i> View details
+                                </a>
+                                @if (proposal.Status == BlindMatchPAS.Core.Entities.ProjectStatus.Pending)
+                                {
+                                    <a asp-action="Edit" asp-route-id="@proposal.Id" class="btn btn-outline-light text-primary border-0 px-4 py-2">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                @if (proposal.Status == BlindMatchPAS.Core.Entities.ProjectStatus.Matched)
+                {
+                    <div class="card-footer bg-success bg-opacity-10 border-0 py-3 ps-4">
+                        <span class="text-success small fw-bold">
+                            <i class="bi bi-check-circle-fill me-1"></i> Match confirmed. Supervisor details are now available in the details view.
+                        </span>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Proposals.Any())
+{
+    <div class="text-center py-5 mt-5">
+        <div class="display-1 text-muted mb-4 opacity-10">
+            <i class="bi bi-journal-plus"></i>
+        </div>
+        <h3>Ready to propose your first project?</h3>
+        <p class="text-muted mb-4">Submit your project idea and get matched with the right supervisor anonymously.</p>
+        <a asp-action="Create" class="btn btn-primary btn-lg rounded-pill px-5">Get Started</a>
+    </div>
+}

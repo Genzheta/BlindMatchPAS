@@ -1,0 +1,62 @@
+@model IEnumerable<BlindMatchPAS.Core.Entities.ResearchArea>
+
+@{
+    ViewData["Title"] = "Research Area Management";
+}
+
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h1 class="display-6 fw-bold">Research <span class="text-primary">Areas</span></h1>
+        <p class="text-muted">Define and manage the categories for student project proposals.</p>
+    </div>
+    <div class="col-md-4 text-md-end">
+        <a asp-action="CreateResearchArea" class="btn btn-primary rounded-pill">
+            <i class="bi bi-plus-lg me-2"></i> Add New Area
+        </a>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light">
+                <tr>
+                    <th class="ps-4 py-3">ID</th>
+                    <th class="py-3">Name</th>
+                    <th class="py-3">Description</th>
+                    <th class="py-3 text-end pe-4">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var area in Model)
+                {
+                    <tr>
+                        <td class="ps-4 text-muted small">#@area.Id</td>
+                        <td><span class="fw-bold">@area.Name</span></td>
+                        <td><span class="text-muted small">@area.Description</span></td>
+                        <td class="text-end pe-4">
+                            <div class="btn-group">
+                                <a asp-action="EditResearchArea" asp-route-id="@area.Id" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form asp-action="DeleteResearchArea" asp-route-id="@area.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this research area?')">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger ms-1">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center py-5">
+                            <p class="text-muted mb-0">No research areas defined yet.</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

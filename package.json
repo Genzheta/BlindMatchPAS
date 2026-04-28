@@ -1,0 +1,21 @@
+{
+  "name": "sdtp_coursework",
+  "version": "1.0.0",
+  "description": "Blind Matching Project Assignment System for university coursework.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Genzheta/SDT-P_Course.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Genzheta/SDT-P_Course/issues"
+  },
+  "homepage": "https://github.com/Genzheta/SDT-P_Course#readme"
+}
